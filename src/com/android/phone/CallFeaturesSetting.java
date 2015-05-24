@@ -46,7 +46,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.preference.BrokenSeekBarPreference;
+import android.preference.SlimSeekBarPreference;
 import android.preference.SwitchPreference;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.Settings;
@@ -368,7 +368,7 @@ public class CallFeaturesSetting extends PreferenceActivity
     private SharedPreferences mPerProviderSavedVMNumbers;
 
     private SwitchPreference mProxSpeaker;
-    private BrokenSeekBarPreference mProxSpeakerDelay;
+    private SlimSeekBarPreference mProxSpeakerDelay;
     private SwitchPreference mProxSpeakerIncallOnly;
 
     /**
@@ -1628,7 +1628,7 @@ public class CallFeaturesSetting extends PreferenceActivity
 
         mProxSpeaker = (SwitchPreference) findPreference(PROX_AUTO_SPEAKER);
         mProxSpeakerIncallOnly = (SwitchPreference) findPreference(PROX_AUTO_SPEAKER_INCALL_ONLY);
-        mProxSpeakerDelay = (BrokenSeekBarPreference) findPreference(PROX_AUTO_SPEAKER_DELAY);
+        mProxSpeakerDelay = (SlimSeekBarPreference) findPreference(PROX_AUTO_SPEAKER_DELAY);
         if (mProxSpeakerDelay != null) {
             mProxSpeakerDelay.setDefault(100);
             mProxSpeakerDelay.isMilliseconds(true);
