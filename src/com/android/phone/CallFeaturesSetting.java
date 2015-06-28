@@ -197,9 +197,8 @@ public class CallFeaturesSetting extends PreferenceActivity
 
     private static final String BUTTON_SELECT_SUB_KEY  = "button_call_independent_serv";
     private static final String BUTTON_XDIVERT_KEY = "button_xdivert";
-
     private static final String FLIP_ACTION_KEY = "flip_action";
-
+    private static final String USE_NON_INTRUSIVE_CALL_KEY = "use_non_intrusive_call";
     private Intent mContactListIntent;
 
     /** Event for Async voicemail change call */
@@ -281,6 +280,7 @@ public class CallFeaturesSetting extends PreferenceActivity
     private AccountSelectionPreference mDefaultOutgoingAccount;
     private boolean isSpeedDialListStarted = false;
     private PreferenceScreen mButtonBlacklist;
+    private SwitchPreference mUseNonIntrusiveCall;
 
 
     private ListPreference mFlipAction;
@@ -628,6 +628,10 @@ public class CallFeaturesSetting extends PreferenceActivity
             Settings.System.putInt(getContentResolver(),
                 Settings.System.CALL_FLIP_ACTION_KEY, index);
             updateFlipActionSummary(index);
+        } else if (preference == mUseNonIntrusiveCall) {
+            final boolean val = (Boolean) objValue;
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.USE_NON_INTRUSIVE_CALL, val ? 1 : 0);
         }
         // always let the preference setting proceed.
         return true;
@@ -1664,6 +1668,10 @@ public class CallFeaturesSetting extends PreferenceActivity
             mProxSpeakerDelay.multiplyValue(100);
             mProxSpeakerDelay.setOnPreferenceChangeListener(this);
         }
+        mUseNonIntrusiveCall = (SwitchPreference) findPreference(USE_NON_INTRUSIVE_CALL_KEY);
+        if (mUseNonIntrusiveCall != null) {
+            mUseNonIntrusiveCall.setOnPreferenceChangeListener(this);
+        }
 
         if (mButtonDTMF != null) {
             if (getResources().getBoolean(R.bool.dtmf_type_enabled)) {
@@ -1850,6 +1858,11 @@ public class CallFeaturesSetting extends PreferenceActivity
                     Settings.System.CALL_FLIP_ACTION_KEY, 2);
             mFlipAction.setValue(String.valueOf(flipAction));
             updateFlipActionSummary(flipAction);
+		}
+
+        if (mUseNonIntrusiveCall != null) {
+            mUseNonIntrusiveCall.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.USE_NON_INTRUSIVE_CALL, 1) != 0);
         }
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
