@@ -28,7 +28,7 @@
 
       <intent android:action="android.intent.action.MAIN"
           android:targetPackage="com.android.phone"
-          android:targetClass="com.android.phone.msim.SelectSubscription" />
+          android:targetClass="com.android.phone.MSimMobileNetworkSubSettings" />
   </PreferenceScreen>
 
   <PreferenceCategory
@@ -79,12 +79,20 @@
         android:persistent="true"
         android:defaultValue="true" />
 
+    <ListPreference
+        android:key="flip_action"
+        android:title="@string/flip_action_title"
+        android:dialogTitle="@string/flip_action_dialog_title"
+        android:entries="@array/flip_action_setting_entries"
+        android:entryValues="@array/flip_action_setting_values"
+        android:persistent="false" />
+
     <SwitchPreference
         android:key="use_non_intrusive_call"
         android:title="@string/use_non_intrusive_call_title"
         android:persistent="false" />
 
-      <PreferenceScreen
+    <PreferenceScreen
           android:key="button_xdivert"
           android:title="@string/xdivert_title"
           android:summary="@string/xdivert_summary"
