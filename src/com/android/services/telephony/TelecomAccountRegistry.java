@@ -506,13 +506,6 @@ final class TelecomAccountRegistry {
                 if (provisionStatus == INVALID_STATE) {
                     provisionStatus = PROVISIONED;
                 }
-
-                Log.d(this, "Phone with subscription id: " + subscriptionId +
-                                " slotId: " + slotId + " provisionStatus: " + provisionStatus);
-            }
-
-            if ((subscriptionId >= 0) && (provisionStatus == PROVISIONED)){
-                mAccounts.add(new AccountEntry(phone, false /* emergency */, false /* isDummy */));
             }
         }
 
