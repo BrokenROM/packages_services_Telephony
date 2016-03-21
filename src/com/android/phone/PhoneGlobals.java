@@ -864,14 +864,6 @@ public class PhoneGlobals extends ContextWrapper {
                           + "but ECM isn't supported for phone: " + phoneInEcm.getPhoneName());
                     phoneInEcm = null;
                 }
-            } else if (action.equals(ACTION_MANAGED_ROAMING_IND)) {
-                int subscription = intent.getIntExtra(PhoneConstants.SUBSCRIPTION_KEY,
-                        SubscriptionManager.getDefaultSubId());
-                Intent createIntent = new Intent();
-                createIntent.setClass(context, ManagedRoaming.class);
-                createIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                createIntent.putExtra(PhoneConstants.SUBSCRIPTION_KEY, subscription);
-                context.startActivity(createIntent);
             }
         }
     }

@@ -238,4 +238,5 @@
 
     <!-- Default value for setting vibrate after call connected -->
     <integer name="config_default_vibrate_after_connected">1</integer>
+    
 </resources>

@@ -455,6 +455,10 @@ final class TelecomAccountRegistry {
         Phone[] phones = PhoneFactory.getPhones();
         Log.d(this, "Found %d phones.  Attempting to register.", phones.length);
 
+        final boolean phoneAccountsEnabled = mContext.getResources().getBoolean(
+                R.bool.config_pstn_phone_accounts_enabled);
+                
+        if (phoneAccountsEnabled) {
         // states we are interested in from what
         // IExtTelephony.getCurrentUiccCardProvisioningStatus()can return
         final int PROVISIONED = 1;
@@ -462,11 +466,7 @@ final class TelecomAccountRegistry {
 
         IExtTelephony mExtTelephony =
             IExtTelephony.Stub.asInterface(ServiceManager.getService("extphone"));
-
-        final boolean phoneAccountsEnabled = mContext.getResources().getBoolean(
-                R.bool.config_pstn_phone_accounts_enabled);
-
-        if (phoneAccountsEnabled) {
+            
             for (Phone phone : phones) {
                 int provisionStatus = PROVISIONED;
                 int subscriptionId = phone.getSubId();
@@ -494,17 +494,16 @@ final class TelecomAccountRegistry {
                         Log.w(this, "Failed to get status for, slotId: "+ slotId +" Exception: " + ex);
                     }
 
+                    if (provisionStatus == INVALID_STATE) {
+                        provisionStatus = PROVISIONED;
+                    }
+
                     Log.d(this, "Phone with subscription id: " + subscriptionId +
                                     " slotId: " + slotId + " provisionStatus: " + provisionStatus);
                 }
 
                 if ((subscriptionId >= 0) && (provisionStatus == PROVISIONED)){
-                    mAccounts.add(new AccountEntry(phone, false /* emergency */,
-                            false /* isDummy */));
-                }
-
-                if (provisionStatus == INVALID_STATE) {
-                    provisionStatus = PROVISIONED;
+                    mAccounts.add(new AccountEntry(phone, false /* emergency */, false /* isDummy */));
                 }
             }
         }
